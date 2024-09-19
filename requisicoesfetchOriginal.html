@@ -1,0 +1,110 @@
+<html>
+    <head>
+    <title>ViaCEP Webservice</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Adicionando Javascript -->
+    <script>
+    
+    function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            document.getElementById('complemento').value=("");
+            document.getElementById('numero').value=("");
+            document.getElementById('local').value=("");
+            document.getElementById('cep').value=("");
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua').value=(conteudo.logradouro);
+            document.getElementById('bairro').value=(conteudo.bairro);
+            document.getElementById('cidade').value=(conteudo.localidade);
+            document.getElementById('uf').value=(conteudo.uf);
+
+            let local = document.getElementById("local")
+            if(conteudo.uf == "SP"){
+                local.value = "São Paulo"
+            } else if (conteudo.if){
+
+            }
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+        
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            
+        } //end if.
+    };
+
+    </script>
+    </head>
+
+    <body>
+    <!-- Inicio do formulario -->
+     <main style="display: flex; width: 100%; height: 100vh; justify-content: center; align-items: center; flex-direction: column;">
+
+         <form style="display: flex; justify-content: center; align-items: center; width: 50%; height: 70vh; gap: 8px; flex-direction: column;" method="get" action=".">
+        <label for="">Nome:</label>
+        <input type="text">
+        <label for="">Data de Nascimento</label>
+        <input type="date">
+        <label>Cep:
+        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9"onblur="pesquisacep(this.value);" /></label><br />
+        <label>Rua:
+        <input name="rua" type="text" id="rua" size="60" /></label><br />
+        <label>Número:
+        <input name="numero" type="number" id="numero" size="15" /></label><br />
+        <label>Bairro:
+            <input name="bairro" type="text" id="bairro" size="40" /></label><br />
+            <label>Complemento:
+                <input name="complemento" type="text" id="complemento" size="40" /></label><br />
+                <label>Cidade:
+        <input name="cidade" type="text" id="cidade" size="40" /></label><br />
+        <label>Estado:
+            <input name="uf" type="text" id="uf" size="2" /></label><br />
+        <label>Local:
+            <input name="local" type="text" id="local" size="20" /></label><br />
+        </form>
+        <button onclick="limpa_formulário_cep()">Limpar</button>
+    </main>
+    </body>
+
+    </html>
