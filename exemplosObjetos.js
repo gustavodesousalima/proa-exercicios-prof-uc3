@@ -51,7 +51,7 @@ console.log('Tem a propriedade "email"?', 'email' in pessoa); // true
 console.log('Tem a propriedade "profissao"?', 'profissao' in pessoa); // false
 
 // Clonagem de objetos
-let pessoaClone = { ...pessoa }; // Cria uma cópia do objeto
+let pessoaClone = { ...pessoa }; // Cria uma cópia do objeto (novo objeto)
 console.log('Clone da pessoa:', pessoaClone);
 
 // Manipulação de objetos aninhados
