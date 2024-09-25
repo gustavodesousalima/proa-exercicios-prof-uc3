@@ -66,3 +66,17 @@ let array10 = [1, 2, 3];
 let array11 = [4, 5, 6];
 let concatenated = array10.concat(array11); // Combina os arrays
 console.log('Concatenação:', concatenated); // [1, 2, 3, 4, 5, 6]
+
+// Iteração
+let numeros = [1, 2, 3, 4, 5];
+
+// Usando for...of para iterar sobre o array
+for (let numero of numeros) {
+    console.log(numero); // Exibe cada número no array
+}
+
+// split
+// O método split divide uma string em um array de substrings com base em um separador.
+let frutas = "maçã,banana,laranja";
+let arrayFrutas = frutas.split(","); // Divide a string usando a vírgula como separador
+console.log(arrayFrutas); // ['maçã', 'banana', 'laranja']
